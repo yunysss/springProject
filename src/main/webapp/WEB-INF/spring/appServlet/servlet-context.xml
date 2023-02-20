@@ -23,6 +23,33 @@
 	
 	<context:component-scan base-package="com.br.spring" />
 	
+	<!-- 
+		* HandlerMapping 등록
+		  -> 요청 url과 매칭되는 Controller를 검색하는 역할을 함
+	 -->
+	
+	<!-- * xml방식 (장점 : 관리의 편의성 높음 / 단점 : 다수의 개발자가 수정시 충돌 발생) -->
+	<!-- 1) 실행시킬 Controller클래스를 빈으로 등록 
+	<beans:bean class="com.br.member.controller.LoginController" id="loginController" />
+	<beans:bean class="com.br.member.controller.LogoutController" id="logoutController" />
+	-->
+	
+	<!-- 2) 위의 Controller와 매칭되는 HandlerMapping 등록 
+	<beans:bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<beans:property name="mappings">
+			<beans:props>
+				<beans:prop key="login.me">loginController</beans:prop>
+				<beans:prop key="logout.me">logoutController</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	-->
+	
+	 
+	
+	
+	
+	
 	
 	
 </beans:beans>

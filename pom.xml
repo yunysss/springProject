@@ -4,10 +4,9 @@
 	
 	<!-- 
 		* pom.xml 구조
-		project {프로젝트정보 + properties + [repositories] + dependencies + build}
+		  project {프로젝트정보 + properties + [repositories] + dependencies + build}
 	 -->
 	 
-	<!-- 프로젝트 정보 : 수정할 일 없음-->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.br</groupId>
 	<artifactId>spring</artifactId>
@@ -24,7 +23,7 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	
-	<!-- * dependencies : 다운로드 받고자 하는 라이브러리들 (Package Explorer > Maven Dependencies에서 jar파일들 확인 가능)-->
+	<!-- * dependencies : 다운로드 받고자 하는 라이브러리들 -->
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -39,11 +38,13 @@
 				 </exclusion>
 			</exclusions>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		
 				
 		<!-- AspectJ -->
 		<dependency>
@@ -127,7 +128,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency>  
 		
 		<!-- 1. DB관련(오라클, 마이바티스 등) 라이브러리들 -->
 		<!-- 1_1. ojdbc6 라이브러리 -->
@@ -144,14 +145,14 @@
 		    <version>${org.springframework-version}</version>
 		</dependency>
 		
-		<!-- 1_3. myBatis 라이브러리 -->    
+		<!-- 1_3. myBatis 라이브러리 -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis</artifactId>
 		    <version>3.5.9</version>
 		</dependency>
-		
-		<!-- 1_4. 스프링에서 myBatis를 사용하기 위한 라이브러리 -->
+				
+		<!-- 1_4. 스프링에서 마이바티스를 사용하기 위한 라이브러리 -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis-spring</artifactId>
@@ -165,6 +166,7 @@
 		    <version>1.4</version>
 		</dependency>
 		
+		      
 	</dependencies>
     <build>
         <plugins>
