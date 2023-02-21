@@ -17,13 +17,15 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao mDao;
 	
 	@Override
-	public Member loginMember(Member m) {
-		
+	public Member loginMember(Member m) { // sqlSession close할 필요 없음
+		Member loginUser = mDao.loginMember(sqlSession, m);
+		return loginUser;
 	}
 
 	@Override
-	public int insertMember(Member m) {
-		return 0;
+	public int insertMember(Member m) { // sqlSession commit/rollback할 필요 없음
+		int result = mDao.insertMember(sqlSession, m);
+		return result;
 	}
 
 	@Override
