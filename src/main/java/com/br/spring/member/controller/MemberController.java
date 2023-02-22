@@ -162,6 +162,8 @@ public class MemberController {
 	 */
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, HttpSession session, ModelAndView mv) {
+		
+		/* * 암호화 작업 전 단순한 로그인
 		Member loginUser = mService.loginMember(m);
 		if(loginUser == null) {
 			mv.addObject("errorMsg", "로그인 실패");
@@ -169,6 +171,27 @@ public class MemberController {
 		} else {
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("redirect:/");
+		}
+		*/
+		
+		// * 암호화 적용 후 로그인 방법
+		// 사용자가 입력한 아이디만을 가지고 우선 회원 조회해옴
+		// 조회된 회원의 비번(암호문)이랑 사용자가 입력한 비번(평문)이랑 일치하는지 비교 
+		// BCryptPasswordEncoder의 matches메소드
+		
+		Member loginUser = mService.loginMember(m);
+		
+		// loginUser의 userPwd == DB에 저장된 비번(암호문)
+		// m의 userPwd == 로그인요청시 입력했던 비번(평문)
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+			// 로그인 성공
+			session.setAttribute("loginUser", loginUser);
+			mv.setViewName("redirect:/");
+		} else {
+			// 로그인 실패
+			mv.addObject("errorMsg", "로그인 실패");
+			mv.setViewName("common/errorPage");
 		}
 		
 		return mv;
@@ -188,7 +211,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("insert.me")
-	public String insertMember(Member m, Model model) {
+	public String insertMember(Member m, Model model, HttpSession session) {
 		//System.out.println(m);
 		
 		// 1. 한글 깨짐 => 스프링에서 제공하는 인코딩 필터 등록 (web.xml)
@@ -235,11 +258,88 @@ public class MemberController {
 		int result = mService.insertMember(m);
 		
 		if(result > 0) { // 성공 => 메인페이지 url재요청
+			
+			session.setAttribute("alertMsg", "성공적으로 회원가입 되었습니다.");
 			return "redirect:/";
+			
 		} else { // 실패 => 에러문구 담아서 에러페이지 포워딩
 			model.addAttribute("errorMsg", "회원가입 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping("myPage.me")
+	public String myPage() {
+		return "member/myPage";
+	}
+	
+	@RequestMapping("update.me")
+	public String updateMember(Member m, HttpSession session, Model model) {
+		int result = mService.updateMember(m);
+		
+		if(result > 0) { // 수정 성공
+			
+			// 갱신된 회원 조회 => session의 loginUser 변경
+			Member updateUser = mService.loginMember(m);
+		    session.setAttribute("loginUser", updateUser);
+		    
+		    session.setAttribute("alertMsg", "성공적으로 회원정보 변경되었습니다.");
+		    
+		    return "redirect:myPage.me";
+		    
+		} else { // 수정 실패
+			model.addAttribute("errorMsg", "회원정보 변경 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("delete.me")
+	public String deleteMember(String userId, String userPwd, HttpSession session, Model model) {
+		// userPwd매개변수 : 회원탈퇴요청시 사용자가 입력한 비번(평문)
+		// session에 loginUser Member객체의 userPwd필드 : DB로부터 조회된 비번(암호문)
+		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
+		
+		// 사용자가 입력한 현재 비번(평문)이 로그인한 회원의 비번(암호문)과 일치하는지 비교
+		if(bcryptPasswordEncoder.matches(userPwd, encPwd)) {
+			// 비번일치 == 본인 맞음 => 탈퇴처리
+			int result = mService.deleteMember(userId);
+			
+			if(result > 0) { // 성공 => session에 loginUser지움, alert문구 담기 => 메인페이지 url 재요청
+				session.removeAttribute("loginUser");
+				session.setAttribute("alertMsg", "성공적으로 탈퇴되었습니다. 이용해주셔서 감사합니다.");
+				return "redirect:/";
+			} else { // 실패
+				model.addAttribute("errorMsg", "회원탈퇴 실패");
+				return "common/errorPage";
+			}
+		} else {
+			// 비번불일치 == 본인 아님 => 비밀번호가 틀림을 알리고 마이페이지
+			session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
+			return "redirect:myPage.me";
+		}                                                                                           
+		
+	}
+	
+	@RequestMapping("updatePwd.me")
+	public String updatePwd(Member m, String updatePwd, HttpSession session) {
+		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
+		
+		if(bcryptPasswordEncoder.matches(m.getUserPwd(), encPwd)) {
+			m.setUserPwd(bcryptPasswordEncoder.encode(updatePwd));
+			
+			int result = mService.updatePwd(m);
+			
+			if(result > 0) {
+				Member updateUser = mService.loginMember(m);
+				session.setAttribute("loginUser", updateUser);
+				session.setAttribute("alertMsg", "비밀번호 변경 성공하였습니다.");
+			} else {
+				session.setAttribute("alertMsg", "비밀번호 변경 실패하였습니다.");
+			}
+		} else {
+			session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
+		}
+		return "redirect:myPage.me";
 	}
 }
 
