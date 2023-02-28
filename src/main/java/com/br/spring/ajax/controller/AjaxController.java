@@ -1,9 +1,14 @@
 package com.br.spring.ajax.controller;
 
+import java.util.ArrayList;
+
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.br.spring.ajax.model.vo.User;
+import com.google.gson.Gson;
 
 @Controller
 public class AjaxController {
@@ -81,4 +86,70 @@ public class AjaxController {
 		
 		return jObj.toJSONString(); // "{name:'홍길동', age:10}"
 	}
+	
+	/*
+	@ResponseBody
+	@RequestMapping(value="ajax2.do", produces="application/json; charset=UTF-8")
+	public String ajaxMethod2(int num) {
+		
+		//User u = uService.selectUser(num);
+		User u = new User("user01", "pass01", "홍길동", 20, "010-2222-3333");
+		
+		// JSON형태로 만들어서 응답
+		JSONObject jObj = new JSONObject();
+		jObj.put("userId", u.getUserId());
+		jObj.put("userPwd", u.getUserPwd());
+		jObj.put("userName", u.getUserName());
+		jObj.put("age", u.getAge());
+		jObj.put("phone", u.getPhone());
+		
+		return jObj.toJSONString();
+	}
+	*/
+	
+	@ResponseBody
+	@RequestMapping(value="ajax2.do", produces="application/json; charset=UTF-8")
+	public String ajaxMethod2(int num) {
+		
+		//User u = uService.selectUser(num);
+		User u = new User("user01", "pass01", "홍길동", 20, "010-2222-3333");
+		
+		return new Gson().toJson(u); // 필드명으로 key값 자동 생성되어 JSon 객체 String으로 반환됨
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="ajax3.do", produces="application/json; charset=UTF-8")
+	public String ajaxMethod3() {
+		
+		//ArrayList<User> list = uService.selectUserList();
+		ArrayList<User> list = new ArrayList<>();
+		list.add(new User("user01", "pass01", "홍길동", 10, "010-2222-3333"));
+		list.add(new User("user02", "pass02", "김말똥", 20, "010-4444-5555"));
+		list.add(new User("user03", "pass03", "강개순", 30, "010-6666-7777"));
+		list.add(new User("user04", "pass04", "김순자", 40, "010-8888-9999"));
+		
+		// [{userId:'xxxx', userPwd:'xxxx', ..}, {}, {}, {}]
+		return new Gson().toJson(list);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

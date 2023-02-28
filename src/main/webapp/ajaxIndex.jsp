@@ -71,5 +71,91 @@
 		}
 	</script>
 	
+	<h3>2. 조회요청 후 조회된 한 회원 객체(vo)를 응답받아서 출력하기</h3>
+	조회할 회원번호 : <input type="number" id="userNo">
+	<button onclick="test2();">조회</button>
+	
+	<div id="result2"></div>
+	
+	<script>
+		function test2(){
+			$.ajax({
+				url:"ajax2.do",
+				data:{num:$("#userNo").val()},
+				success:function(obj){
+					console.log(obj); // {속성:속성값}
+					
+					let value = "<ul>"
+								+	"<li>이름 : " + obj.userName + "</li>"
+								+	"<li>아이디 : " + obj.userId + "</li>"
+								+	"<li>전화번호 : " + obj.phone + "</li>"
+								+ "</ul>"
+								
+					$("#result2").html(value);
+				},error:function(){
+					console.log("ajax 통신 실패");
+				}
+			});
+		}
+	</script>
+	
+	<h3>3. 조회요청 후 조회된 회원리스트 응답받아서 출력해보기</h3>
+	<button id="btn">회원 전체 조회</button>
+	<br><br>
+	
+	<table border="1" id="result3">
+		<thead>
+			<tr>
+				<th>이름</th>
+				<th>아이디</th>
+				<th>나이</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+	
+	<script>
+		$(function(){
+			$("#btn").click(function(){
+				$.ajax({
+					url:"ajax3.do",
+					success:function(list){
+						
+						console.log(list);
+						
+						let value = "";
+						for(let i=0; i<list.length; i++){
+							value += "<tr>"
+									+	"<td>" + list[i].userName + "</td>"
+									+	"<td>" + list[i].userId + "</td>"
+									+	"<td>" + list[i].age + "</td>"
+									+ "</tr>"
+						}
+						
+						$("#result3 tbody").html(value);
+					},error:function(){
+						console.log("ajax 통신 실패");
+					}
+				})
+			})
+		})
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </body>
 </html>

@@ -10,14 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.spring.board.model.service.BoardService;
 import com.br.spring.board.model.vo.Board;
+import com.br.spring.board.model.vo.Reply;
 import com.br.spring.common.model.vo.PageInfo;
 import com.br.spring.common.template.FileUpload;
 import com.br.spring.common.template.Pagination;
+import com.google.gson.Gson;
 
 @Controller
 public class BoardController {
@@ -210,6 +213,28 @@ public class BoardController {
 			model.addAttribute("errorMsg", "게시글 수정 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rlist.bo", produces="application/json; charset=utf-8")
+	public String ajaxSelectReplyList(int no) {
+		
+		ArrayList<Reply> list = bService.selectReplyList(no);
+		return new Gson().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping("rinsert.bo")
+	public String ajaxInsertReply(Reply r) {
+		int result = bService.insertReply(r);
+		return result > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="topList.bo", produces="application/json; charset=utf-8")
+	public String ajaxSelectTopList() {
+		ArrayList<Board> list = bService.selectTopList();
+		return new Gson().toJson(list);
 	}
 }
 
