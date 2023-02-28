@@ -1,5 +1,7 @@
 package com.br.spring.member.controller;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.br.spring.common.template.FileUpload;
 import com.br.spring.member.model.service.MemberService;
 import com.br.spring.member.model.vo.Member;
 
@@ -193,7 +198,6 @@ public class MemberController {
 			mv.addObject("errorMsg", "로그인 실패");
 			mv.setViewName("common/errorPage");
 		}
-		
 		return mv;
 	}
 	
@@ -341,17 +345,39 @@ public class MemberController {
 		}
 		return "redirect:myPage.me";
 	}
+	
+	@ResponseBody
+	@RequestMapping("idCheck.me")
+	public String ajaxIdCheck(String checkId) {
+		int count = mService.idCheck(checkId);
+		
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
+	
+	@ResponseBody // 응답데이터 돌려주지 않아도 ajax 요청시 반드시 붙여야함
+	@RequestMapping("uploadProfile.me")
+	public void uploadProfileImg(MultipartFile uploadFile, Member m, 
+								 String originalFile, HttpSession session) {
+		
+		//System.out.println(uploadFile);
+		if(uploadFile != null) {
+			String saveFilePath = FileUpload.saveFile(uploadFile, session, "resources/profile_images/");
+			m.setProfileImg(saveFilePath);
+			
+			int result = mService.updateProfileImg(m);
+			
+			if(result > 0) {
+				if(!originalFile.equals("")) { // 기존 프로필이 있었을 경우
+					new File(session.getServletContext().getRealPath(originalFile)).delete();
+				}
+				
+				session.setAttribute("loginUser", mService.loginMember(m));
+			}
+			
+		}
+		
+	}
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

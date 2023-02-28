@@ -29,6 +29,40 @@
                 <img id="profileImg" src="<c:out value='${ loginUser.profileImg }' default='resources/profile_images/defaultProfile.png' />" onclick="$('#profileImgFile').click();">
                 <input type="file" id="profileImgFile" style="display:none;">
             </div>
+            
+            <script>
+            	$(function(){
+            		$("#profileImgFile").change(function(){
+            			
+            			// * 비동기식으로 첨부파일 업로드
+            			// 새로운 파일이 선택되는 순간 곧바로 ajax 요청으로
+            			// 첨부파일 넘겨서 => 서버에 업로드 => db에도 update
+            			
+            			let formData = new FormData(); // 가상의 form요소
+            			
+            			let uploadFile = this.files[0]; // 현재 선택된 파일객체
+            			//console.log(uploadFile);
+            			
+            			formData.append("uploadFile", uploadFile);
+            			formData.append("userId", '${loginUser.userId}');
+            			formData.append("originalFile", '${loginUser.profileImg}');
+            			
+            			$.ajax({
+            				url:"uploadProfile.me",
+            				data:formData, // 파일이 담겨있는 form
+            				processData:false,
+            				contentType:false,
+            				type:"POST",
+            				success:function(){
+            					location.reload();
+            				},error:function(){
+            					console.log("프로필이미지 변경용 ajax 통신 실패");
+            				}
+            			})
+            			
+            		});
+            	})
+            </script>
 
             <form action="update.me" method="post">
                 <div class="form-group">

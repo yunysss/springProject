@@ -40,12 +40,17 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int idCheck(String checkId) {
-		return 0;
+		return mDao.idCheck(sqlSession, checkId);
 	}
 
 	@Override
 	public int updatePwd(Member m) {
 		return mDao.updatePwd(sqlSession, m);
+	}
+
+	@Override
+	public int updateProfileImg(Member m) {
+		return mDao.updateProfileImg(sqlSession, m);
 	}
 
 }
