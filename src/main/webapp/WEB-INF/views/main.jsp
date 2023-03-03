@@ -86,6 +86,22 @@
             
             <br>
             
+            <hr>
+            
+            <h4>WebSocket을 이용해서 실시간으로 통신하기</h4>
+            <p>
+            	실시간채팅 또는 실시간으로 알람을 울린다거나 할 때 주로 websocket 사용 <br><br>
+            	
+            	* HTTP통신(기본통신방식) : 비연결 통신 <br>
+            	- 한번 요청 보내고 응답되면 연결끊김 == 지속적으로 데이터를 주고받기 x <br><br>
+            	
+            	* websocket통신 : 영구적 양방향 통신 <br>
+            	- 실시간으로 연결되어있음 == 지속적으로 데이터를 주고받기 o <br><br>
+            </p>
+            
+            <c:if test="${ not empty loginUser }">
+            	<a class="btn btn-secondary" style="float:right" href="chattingRoom.do">채팅방입장</a>
+            </c:if>
         </div>
         <br><br>
     </div>
