@@ -13,47 +13,39 @@
 </style>
 </head>
 <body>
-
 	<jsp:include page="boardMenubar.jsp"/>
-
 	<script>
-        document.getElementsByClassName("menus")[0].className += ' clicked';
+        document.getElementsByClassName("menus")[2].className += ' clicked';
     </script>
-    <div class="boardOuter">
-		<!-- 글쓰기 버튼 관리자만 보여짐 -->
-	    <div align="right">
-	        <a href="" class="btn" id="write">글쓰기</a>
-	    </div>
-	    <br>
-	    <table class="table">
-	        <thead class="thead-light">
-	          <tr>
-	            <th style="width:50px;">번호</th>
-	            <th style="width:500px;">제목</th>
-	            <th>작성자</th>
-	            <th>작성일</th>
-	            <th style="width:70px;">조회수</th>
-	          </tr>
-	        </thead>
-	        <tbody>
-	          <tr>
-	            <td>10</td>
-	            <td><b>📢 중요 공지사항 제목 <img src="resource/images/clip.png" height="15px" width="15px"></b></td>
-	            <td>김은숙 팀장</td>
-	            <td>2023-02-16</td>
-	            <td>100</td>
-	          </tr>
-	          <tr>
-	            <td>9</td>
-	            <td>공지사항 제목</td>
-	            <td>문동은 팀장</td> 
-	            <td>2023-02-15</td>
-	            <td>50</td>
-	          </tr>
-	        </tbody>
-	    </table>
-	
-	    <form id="searchForm" action="" method="Get">
+    
+    <div class="boardOuter"> 
+        <br>
+        <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th style="width:50px;">번호</th>
+                <th style="width:500px;">제목</th>
+                <th>작성일</th>
+                <th style="width:70px;">조회수</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>10</td>
+                <td>익명게시판 제목</td>
+                <td>2023-02-16</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>익명게시판 제목</td>
+                <td>2023-02-15</td>
+                <td>50</td>
+              </tr>
+            </tbody>
+        </table>
+        
+        <form id="searchForm" action="" method="Get">
             <div class="select">
                 <select name="condition">
                     <option value="all">전체</option>

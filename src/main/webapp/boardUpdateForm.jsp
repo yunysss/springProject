@@ -58,7 +58,7 @@
                 <tr>
                     <td style="vertical-align:top;">내용</td>
                     <td>
-                        <textarea name="" required>제발 알려주세요</textarea>
+                        <textarea name="" style="resize:none" required>제발 알려주세요</textarea>
                     </td>
                 </tr>
             </table>
@@ -66,7 +66,7 @@
                 <button type="button" class="btn" id="cancel-btn">취소</button>
                 <button type="button" class="btn" id="modal-btn" data-toggle="modal" data-target="#modifyModal">수정</button>
             </div>
-            <div class="modal" id="modifyModal">
+            <div class="modal" id="modifyModal" data-backdrop='static' data-keyboard='false'>
                 <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                     <div class="modal-body">

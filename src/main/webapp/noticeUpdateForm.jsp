@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style>
 	/* table 스타일 */
-    td{padding-bottom:5px;}
+    .boardOuter td{padding-bottom:10px;}
 
     /* input 스타일 */
     input[type=text], #upfileList{
@@ -50,12 +50,17 @@
     }
     #enroll-btn{background: rgb(111, 80, 248);}
     
-    button:hover{opacity: 0.7;}
+    .boardOuter button:hover{opacity: 0.7;}
 </style>
 </head>
 <body>
 	
 	<jsp:include page="boardMenubar.jsp"/>
+	
+	<!-- include summernote css/js-->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 	
 	<script>
 	   document.getElementsByClassName("menus")[0].className += ' clicked';
@@ -66,8 +71,8 @@
         <form action="" method="post" enctype="">
             <table>
                 <tr>
-                    <td>제목</td>
-                    <td width="700"><input type="text" id="noticeTitle" name="" value="[공지] 회의실 노트북 패스워드 변경 작업 안내" required></td>
+                    <td width="100">제목</td>
+                    <td><input type="text" id="noticeTitle" name="" value="[공지] 회의실 노트북 패스워드 변경 작업 안내" required></td>
                 </tr>
                 <tr>
                     <td>
@@ -97,8 +102,8 @@
                         $(function(){
                             $('#summernote').summernote({
                                 height: 200,                 // 에디터 높이
-                                minHeight: 400,             // 최소 높이
-                                maxHeight: 300,             // 최대 높이
+                                minHeight: 500,             // 최소 높이
+                                maxHeight: 500,             // 최대 높이
                                 lang: "ko-KR"					// 한글 설정
                             });
                         });

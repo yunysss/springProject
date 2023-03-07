@@ -41,9 +41,8 @@
     textarea{
         border: 1px solid rgb(202, 199, 199);
         border-radius: 5px;
-        width: 300px;
+        width: 350px;
         height:100px;
-        resize: none;
     }
 </style>
 </head>
@@ -57,7 +56,7 @@
 	<div class="boardOuter">
         <table>
             <tr>
-                <td colspan="2" width="1200px"><h5>개발팀 차은우 대리 여자친구 있나요?</h5></td>
+                <td colspan="2" width="1100px"><h5>개발팀 차은우 대리 여자친구 있나요?</h5></td>
                 <td style="text-align: right;">
                     <div class="dropdown btn-align">
                         <img src="resource/images/dots.png" class="dropdown-toggle" data-toggle="dropdown" height="15" width="15">
@@ -86,13 +85,13 @@
             </tr>
         </table>
         <br>
-        <div align="center">
+        <div align="center" style="width:1200px;">
             <a href="" class="btn" id="list-btn">목록</a>
             <a href="" class="btn" id="modal-btn" data-toggle="modal" data-target="#reportModal">신고</a>
         </div>
 
         <!-- 삭제 확인용 Modal -->
-        <div class="modal" id="deleteModal">
+        <div class="modal" id="deleteModal" data-backdrop='static' data-keyboard='false'>
             <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-body">
@@ -108,7 +107,7 @@
         </div>
 
         <!-- 신고용 Modal -->
-        <div class="modal" id="reportModal">
+        <div class="modal" id="reportModal" data-backdrop='static' data-keyboard='false'>
             <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -125,7 +124,7 @@
                             </tr>
                             <tr>
                                 <td><b>신고내용</b></td>
-                                <td><textarea name="" placeholder="내용을 입력해주세요." required></textarea></td>
+                                <td><textarea name="" placeholder="내용을 입력해주세요." style="resize: none;" required></textarea></td>
                             </tr>
                         </table>
                         <div align="center">

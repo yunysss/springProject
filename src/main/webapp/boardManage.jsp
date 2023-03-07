@@ -7,37 +7,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	/* 익명게시판 신고 리스트 */
+	/* 게시판 리스트 */
     .table{text-align: center;}
     .table>tbody>tr:hover{cursor:pointer; opacity: 0.7;}
-
-    /* 페이징 */
-    #paging{text-align: center;}
-    ul{
-        padding:0px; 
-        display:inline-block;
-    }
-    #paging li {
-        text-align: center;
-        float: left;
-        list-style:none;
-        border-radius:5px;
-        background: rgb(244, 244, 244);
-        margin:2px;
-    }
-    #paging li a {
-        display: block;
-        font-size: 12px;
-        color: black;
-        padding: 5px 10px;
-        box-sizing: border-box;
-        text-decoration-line:none;
-    }
-    #paging li:hover{background: rgb(111, 80, 248);}
-    #paging li a:hover{color: white;}
-    #paging li.on {background: rgb(111, 80, 248);}
-    #paging li.on a {color: white;}
-
+    
     /* 버튼 스타일 */
     #modal-btn, #exit-btn, #delete-btn, #check-btn, #blind-btn{
         color:white;
@@ -117,7 +90,7 @@
         </div>
         
         <!-- 삭제 확인용 Modal -->
-        <div class="modal" id="deleteModal">
+        <div class="modal" id="deleteModal" data-backdrop='static' data-keyboard='false'>
             <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-body">
@@ -133,7 +106,7 @@
         </div>
 
         <!-- 블라인드 처리용 Modal -->
-        <div class="modal" id="blindModal">
+        <div class="modal" id="blindModal" data-backdrop='static' data-keyboard='false'>
             <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
